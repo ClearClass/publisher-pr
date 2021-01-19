@@ -1,7 +1,9 @@
 package in.clearclass.entity;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 public class Message {
-	private static Long curr_id = 0L;
+	private static AtomicLong curr_id = new AtomicLong(0);
 	
 	private Long id;
 	private Integer msisdn;
@@ -12,9 +14,7 @@ public class Message {
 	}
 
 	public Message(Integer msisdn, MessageType action, Long timestamp) {
-		synchronized (Message.class) {
-			this.id = ++curr_id;
-		}
+		this.id = curr_id.incrementAndGet();
 		this.msisdn = msisdn;
 		this.action = action;
 		this.timestamp = timestamp;
